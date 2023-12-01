@@ -1,0 +1,34 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class PermutacionesProbabilidad {
+
+    public static void main(String[] args) {
+        List<Character> datos = List.of('A', 'B', 'B', 'C', 'D');
+        List<String> permutaciones = permutar(datos);
+
+        System.out.println("Permutaciones totales: " + permutaciones.size());
+        permutaciones.forEach(System.out::println);
+
+        System.out.println("Probabilidad de ABBCD: " + 1.0 / permutaciones.size());
+    }
+
+    public static List<String> permutar(List<Character> letras) {
+        List<String> permutations = new ArrayList<>();
+        permutar(letras, new StringBuilder(), permutations);
+        return permutations;
+    }
+
+    private static void permutar(List<Character> letras, StringBuilder prefijo, List<String> permutations) {
+        if (letras.isEmpty()) {
+            permutations.add(prefijo.toString());
+        } else {
+            for (int i = 0; i < letras.size(); i++) {
+                Character first = letras.get(i);
+                List<Character> rem = new ArrayList<>(letras);
+                rem.remove(i);
+                permutar(rem, new StringBuilder(prefijo).append(first), permutations);
+            }
+        }
+    }
+}
